@@ -1,8 +1,8 @@
-<link rel="stylesheet" type="text/css" href="../assets/css/home.css">
+<link rel="stylesheet" type="text/css" href="/css/home.css">
 
 <div class="box">
 
-    <div class="container home">
+    <div class="home">
         <!-- main text -->
         <div class="center-text">
             <h1>Upload a File Here</h1>
@@ -10,12 +10,13 @@
         </div>
     
         <!-- upload box -->
-        <form action="/upload" method="post" enctype="multipart/form-data">
+        <div class="container"><form action="/upload" method="post" enctype="multipart/form-data">
             <div class="input-container">
                 <input type="file" id="csvFile" name="file" accept=".csv">
                 <button class="upload-btn">Upload</button>
             </div>
-        </form>
+        </form></div>
+        
     </div>
     
     <!-- show uploaded files -->
@@ -40,11 +41,11 @@
                 <tbody>
                     <% for(let file of files) { %>
                     <tr>
-                        <td><%= file.fileName %></td>
+                        <td><%= file.originalname %></td>
                         <td><%= file.createdAt.toLocaleDateString() %></td>
                         <td><%= file.createdAt.toLocaleTimeString() %></td>
-                        <td><a href="/view/<%= file.file %>" class="view-link"><i class="fa-solid fa-arrow-up-right-from-square"></i></a></td>
-                        <td><a href="/delete/<%= file.file %>" class="delete-link"><i class="fa-regular fa-trash-can " style="color: #f00;"></i></a></td>
+                        <td><a href="/file/view/<%= file.id %>" class="view-link"><i class="fa-solid fa-arrow-up-right-from-square"></i>View</a></td>
+                        <td><a href="/delete/<%= file.id %>" class="delete-link"><i class="fa-regular fa-trash-can " style="color: #f00;"></i>Delete</a></td>
                     </tr>
                     <% } %>
                 </tbody>

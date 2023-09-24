@@ -8,8 +8,10 @@ const fileController = require('../controllers/file_controller');
 //create multer for file upload
 const multer = require('multer');
 
+const uploadDir = path.join(__dirname, '../uploads');
+
 const multStorage = multer.diskStorage({destination:(req,file,cb)=>{
-    cb(null,path.join(__dirname+"uploads"));
+    cb(null,uploadDir);
 }});
 
 //filter for only csv file upload
@@ -32,7 +34,7 @@ router.post('/upload',upload.single('file'), fileController.upload );
 
 router.get('/file/view/:id',fileController.view);
 
-
+router.get('/delete/:id',fileController.delete);
 
 
 

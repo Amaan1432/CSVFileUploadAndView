@@ -44,7 +44,7 @@ module.exports.view = async (req,res)=>{
         .on('data', (data) =>
         results.push(data))
         .on('end', () => {
-            res.render("file_viewer", {
+            res.render("view", {
                 title: file.originalname,
                 fileName: file.originalname,
                 head: header,
@@ -53,4 +53,34 @@ module.exports.view = async (req,res)=>{
             });
         });
     
+}
+
+module.exports.delete = async (req,res)=>{
+    let file = await CSV.findById(req.params.id)
+    let filename = file.filename;
+    console.log('filename',filename);
+    if (!filename) {
+      return res.status(400).send('Filename not provided.');
+    }
+  
+    const filePath = path.join(__dirname, '../uploads', filename);
+
+    fs.unlink(filePath, function(err) {
+        if(err && err.code == 'ENOENT') {
+            // file doens't exist
+            console.info("File doesn't exist, won't remove it.");
+        } else if (err) {
+            // other errors, e.g. maybe we don't have enough permission
+            console.error("Error occurred while trying to remove file");
+        } else {
+            CSV.findByIdAndDelete(req.params.id)
+            .then(()=>console.log('deleted'))
+            .catch(err=>{
+                console.error(err);
+            })
+        }
+    });
+    // fs.unlinkSync({path:filePath});
+    return res.redirect('back');
+
 }
