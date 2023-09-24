@@ -6,6 +6,7 @@ const ejsLayouts = require('express-ejs-layouts');
 
 const app = express();
 
+
 //middleware for passing data
 app.use(express.urlencoded({extended:true}));
 app.use(express.json());
