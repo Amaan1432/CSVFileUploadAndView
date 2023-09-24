@@ -1,11 +1,11 @@
-const CSV = require('../config/mongoose');
+const CSV = require('../model/csv');
 const path = require('path');
 const parser = require('csv-parser');
 const fs = require('fs');
 
 module.exports.home =async (req,res)=>{
     let files = await CSV.find({});
-    // return res.render('home',files);
+    return res.render('home',{title:'File Manager',files});
     
 }
 
@@ -53,5 +53,4 @@ module.exports.view = async (req,res)=>{
             });
         });
     
-
 }
